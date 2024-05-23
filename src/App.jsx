@@ -1,13 +1,11 @@
-
-import ProjectDashboard from "./Components/ProjectDashboard"
+import { ProjectDashboard } from "./Components";
 
 function App() {
-
   return (
     <>
       <ProjectDashboard />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
