@@ -1,11 +1,11 @@
 
-import ProjectList from "./Components/ProjectList"
+import ProjectDashboard from "./Components/ProjectDashboard"
 
 function App() {
 
   return (
     <>
-      <ProjectList />
+      <ProjectDashboard />
     </>
   )
 }

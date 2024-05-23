@@ -1,5 +1,3 @@
-// import * as React from 'react';
-import MainArea from './MainArea';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import Toolbar from '@mui/material/Toolbar';
@@ -12,11 +10,12 @@ import ListItemText from '@mui/material/ListItemText';
 import AddIcon from '@mui/icons-material/Add';
 const drawerWidth = 240;
 
-export default function SideBar({ addNewProject }) {
+export default function SideBar({ projectList, addNewProject, handleProjectClick, handleDrawerClick }) {
 
     return (
         <>
             <Drawer
+                onClick={handleDrawerClick}
                 sx={{
                     width: drawerWidth,
                     flexShrink: 0,
@@ -35,14 +34,35 @@ export default function SideBar({ addNewProject }) {
                 </Toolbar>
                 <List>
                     <ListItem>
-                        <ListItemButton onClick={addNewProject}>
+                        <ListItemButton onClick={(e) => {
+                            e.stopPropagation();
+                            console.log('add project clicked')
+                            addNewProject()
+                        }}>
                             <ListItemIcon>
                                 <AddIcon />
                             </ListItemIcon>
                             <ListItemText primary="Add new project"></ListItemText>
                         </ListItemButton>
-                        {/* map over some array, and render different listItems components */}
                     </ListItem>
+                    {/* map over the received project list and render listitems */}
+                    {
+                        projectList.map((project, index) => {
+                            return (
+                                <ListItem key={index}>
+                                    <ListItemButton
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            console.log('project clicked')
+                                            handleProjectClick(project)
+                                        }}>
+                                        <ListItemText>{project.title}</ListItemText>
+                                    </ListItemButton>
+                                </ListItem>
+                            )
+                        })
+                    }
+
                 </List>
             </Drawer>
             {/* <MainArea /> */}
