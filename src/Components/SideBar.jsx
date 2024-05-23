@@ -1,5 +1,6 @@
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
+import { Divider } from '@mui/material';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
@@ -11,6 +12,22 @@ import AddIcon from '@mui/icons-material/Add';
 const drawerWidth = 240;
 
 export default function SideBar({ projectList, addNewProject, handleProjectClick, handleDrawerClick }) {
+
+    const drawerList = projectList.map((project, index) => {
+        return (
+            <ListItem key={index}>
+                <ListItemButton
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        console.log('project clicked')
+                        handleProjectClick(project)
+                    }}>
+                    <ListItemText>{project.title}</ListItemText>
+                </ListItemButton>
+            </ListItem>
+        )
+    })
+
 
     return (
         <>
@@ -45,27 +62,10 @@ export default function SideBar({ projectList, addNewProject, handleProjectClick
                             <ListItemText primary="Add new project"></ListItemText>
                         </ListItemButton>
                     </ListItem>
-                    {/* map over the received project list and render listitems */}
-                    {
-                        projectList.map((project, index) => {
-                            return (
-                                <ListItem key={index}>
-                                    <ListItemButton
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            console.log('project clicked')
-                                            handleProjectClick(project)
-                                        }}>
-                                        <ListItemText>{project.title}</ListItemText>
-                                    </ListItemButton>
-                                </ListItem>
-                            )
-                        })
-                    }
-
+                    <Divider />
+                    {drawerList}
                 </List>
             </Drawer>
-            {/* <MainArea /> */}
         </>
     );
 }

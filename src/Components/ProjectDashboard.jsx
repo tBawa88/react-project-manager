@@ -8,7 +8,7 @@ function ProjectDashboard() {
     const [projectList, setProjectList] = useState([]);
     const [addProjectSelected, setAddProjectSelected] = useState(false);
     const [clickedProject, setClickedProject] = useState({});
-
+    const [projectTaskList, setProjectTaskList] = useState({});
     const projectIsClicked = Object.keys(clickedProject).length !== 0;
 
     const renderNewProjectPage = () => {
@@ -40,6 +40,16 @@ function ProjectDashboard() {
         setAddProjectSelected(false);
     }
 
+    const handleAddTask = (title, taskContent) => {
+        setProjectTaskList(oldList => {
+            return {
+                ...oldList,
+                [title]: [...(oldList[title] || []), taskContent]
+                //if oldList[title] is falsy, meaning the property doesnt exist, or it's an empty array
+                //initialize it with an empty array, and add taskContent into it
+            }
+        })
+    }
     return (
         <>
             <Box sx={{ display: 'flex' }}>
@@ -62,7 +72,11 @@ function ProjectDashboard() {
                     cancelProject={handleCancelProject} />}
 
                 {/* conditionally render projectContent component */}
-                {(projectIsClicked && !addProjectSelected) && <ProjectContent project={clickedProject} />}
+                {(projectIsClicked && !addProjectSelected) && <ProjectContent
+                    project={clickedProject}
+                    addNewTask={handleAddTask}
+                    projectTaskList={projectTaskList}
+                />}
             </Box>
         </>
     )
