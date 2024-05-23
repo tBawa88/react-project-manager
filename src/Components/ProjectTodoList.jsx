@@ -26,10 +26,14 @@ export default function ProjectTodoList({ title, addNewTask }) {
                     value={inputValue}
                     onChange={handleChange}
                 />
+
                 <Button
                     variant='text'
                     sx={{ marginTop: '15px' }}
-                    onClick={() => { addNewTask(title, inputValue); }}
+                    onClick={() => {
+                        addNewTask(title, inputValue);
+                        setInputValue('');
+                    }}
                 >Add task</Button>
 
                 {/* map over all the tasks and render them here */}

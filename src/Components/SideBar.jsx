@@ -13,13 +13,12 @@ const drawerWidth = 240;
 
 export default function SideBar({ projectList, addNewProject, handleProjectClick, handleDrawerClick }) {
 
-    const drawerList = projectList.map((project, index) => {
+    const listOfProjects = projectList.map((project, index) => {
         return (
             <ListItem key={index}>
                 <ListItemButton
                     onClick={(e) => {
                         e.stopPropagation();
-                        console.log('project clicked')
                         handleProjectClick(project)
                     }}>
                     <ListItemText>{project.title}</ListItemText>
@@ -53,7 +52,6 @@ export default function SideBar({ projectList, addNewProject, handleProjectClick
                     <ListItem>
                         <ListItemButton onClick={(e) => {
                             e.stopPropagation();
-                            console.log('add project clicked')
                             addNewProject()
                         }}>
                             <ListItemIcon>
@@ -63,7 +61,7 @@ export default function SideBar({ projectList, addNewProject, handleProjectClick
                         </ListItemButton>
                     </ListItem>
                     <Divider />
-                    {drawerList}
+                    {listOfProjects}
                 </List>
             </Drawer>
         </>

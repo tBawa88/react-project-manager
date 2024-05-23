@@ -5,9 +5,9 @@ import ProjectContent from "./ProjectContent";
 import AddProject from "./AddProject";
 import NoProjects from "./NoProjects";
 function ProjectDashboard() {
-    const [projectList, setProjectList] = useState([]);
     const [addProjectSelected, setAddProjectSelected] = useState(false);
     const [clickedProject, setClickedProject] = useState({});
+    const [projectList, setProjectList] = useState([]);
     const [projectTaskList, setProjectTaskList] = useState({});
     const projectIsClicked = Object.keys(clickedProject).length !== 0;
 
@@ -22,7 +22,6 @@ function ProjectDashboard() {
 
     //added new project into the array 
     const handleSaveProject = (project) => {
-        console.log("Inside project list component", project)
         setProjectList(oldList => [...oldList, project]);
         setClickedProject(project);
         setAddProjectSelected(false);
@@ -50,6 +49,32 @@ function ProjectDashboard() {
             }
         })
     }
+
+    const handleDeleteTask = (projectTitle, taskIndex) => {
+        setProjectTaskList(oldList => {
+            const newTaskArray = projectTaskList[projectTitle].filter((task, index) => index !== taskIndex);
+            return {
+                ...oldList,
+                [projectTitle]: newTaskArray
+            }
+        })
+    }
+
+    const handleDeleteProject = (targetProject) => {
+        const temp = {};
+        setClickedProject(temp);
+        setProjectList(oldList => oldList.filter(project => project.id !== targetProject.id))
+        setProjectTaskList(oldList => {
+            return {
+                ...oldList,
+                [targetProject.title]: []
+            }
+        })
+        //remove project from clickedProject state
+        //also from projectList state
+        //also all it's tasks from projectTaskList state 
+    }
+
     return (
         <>
             <Box sx={{ display: 'flex' }}>
@@ -72,10 +97,12 @@ function ProjectDashboard() {
                     cancelProject={handleCancelProject} />}
 
                 {/* conditionally render projectContent component */}
-                {(projectIsClicked && !addProjectSelected) && <ProjectContent
+                {(projectIsClicked) && <ProjectContent
                     project={clickedProject}
-                    addNewTask={handleAddTask}
                     projectTaskList={projectTaskList}
+                    addNewTask={handleAddTask}
+                    deleteTask={handleDeleteTask}
+                    deleteProject={handleDeleteProject}
                 />}
             </Box>
         </>

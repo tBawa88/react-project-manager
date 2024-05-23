@@ -2,8 +2,8 @@ import { Box, TextField, Stack, Button } from "@mui/material"
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { useRef, useState } from "react";
-
+import { useState } from "react";
+import { v4 as uuid } from 'uuid';
 export default function AddProject({ cancelProject, saveProject }) {
     const [projectInfo, setProjectInfo] = useState({
         title: '',
@@ -18,7 +18,13 @@ export default function AddProject({ cancelProject, saveProject }) {
     }
 
     const handleSave = () => {
+        projectInfo.id = uuid();
         saveProject(projectInfo);
+        setProjectInfo({
+            title: '',
+            description: '',
+            dueDate: ''
+        })
     }
 
     return (
