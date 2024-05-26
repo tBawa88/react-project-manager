@@ -1,6 +1,11 @@
+import { Tasks } from './';
+
 export const Project = ({
     project,
-    onDelete
+    onDelete,
+    onAddTask,
+    onDeleteTask,
+    taskList
 }) => {
 
     const formattedDate = new Date(project.date).toLocaleDateString('en-UK', {
@@ -10,7 +15,7 @@ export const Project = ({
     })
     return (
         <div className="w-[40rem] my-16">
-            <header className="border-b-2 border-stone-300">
+            <header className="border-b-2 border-stone-300 mb-6">
                 <div className="flex justify-between">
                     <h1 className="text-3xl font-bold text-stone-500">{project.title}</h1>
                     <button className="p-2 text-stone-400 hover:text-stone-700"
@@ -20,6 +25,9 @@ export const Project = ({
                 <p className="text-md text-stone-400 my-2">{formattedDate}</p>
                 <p className="my-4 text-stone-700">{project.description}</p>
             </header>
+            <Tasks taskList={taskList}
+                onAddTask={onAddTask}
+                onDeleteTask={onDeleteTask} />
         </div>
     )
 }
