@@ -1,4 +1,4 @@
-import { SideBar } from './Components'
+import { SideBar, NoProject, NewProject } from './Components'
 import { useState } from 'react';
 function App() {
   const [projectState, setProjectState] = useState({
@@ -7,10 +7,29 @@ function App() {
   })
   const [taskList, setTaskList] = useState({});
 
+  const handleNewProject = () => {
+    setProjectState(oldState => ({
+      ...oldState,
+      selectedProject: null
+    }))
+  }
+
+
+
+
+
+
+  let projectContent;
+  if (projectState.selectedProject === undefined)
+    projectContent = <NoProject onAddProject={handleNewProject} />
+  else if (projectState.selectedProject === null)
+    projectContent = <NewProject />
   return (
-    <>
-      <SideBar />
-    </>
+    <main className='h-screen my-8 flex gap-16'>
+      <SideBar onAddProject={handleNewProject} />
+      {projectContent}
+      {/* project content adjacent to side bar component */}
+    </main>
   );
 }
 
