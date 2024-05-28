@@ -1,15 +1,19 @@
 import { createContext, useState } from "react";
+import { v4 as uuid } from 'uuid';
 
 //initializing context value for autocomplete purposes, this is not necessary
 export const ProjectContext = createContext({
     selectedProject: undefined,
     projectList: [],
+    taskList: [],
     onAddNewProject: () => { },
     onCancel: () => { },
     onSave: () => { },
     onProjectClick: () => { },
     onDeselectProject: () => { },
-    onDelete: () => { }
+    onDelete: () => { },
+    onAddTask: () => { },
+    onDeleteTask: () => { }
 })
 
 
@@ -19,6 +23,7 @@ export default function ProjectStateProvider({ children }) {
         selectedProject: undefined,
         projects: [],
     })
+    const [taskList, setTaskList] = useState({});
 
     const showNewProjectForm = () => {
         setProjectState(oldState => ({
@@ -26,7 +31,6 @@ export default function ProjectStateProvider({ children }) {
             selectedProject: null
         }))
     }
-
     const handleCancelProject = () => {
         setProjectState(oldState => ({ ...oldState, selectedProject: undefined }))
     }
@@ -48,16 +52,40 @@ export default function ProjectStateProvider({ children }) {
             }
         })
     }
+    const handleAddTask = (task, projectId) => {
+        const newTask = {
+            taskText: task,
+            taskId: uuid(),
+            projectId: projectId
+        }
+        setTaskList(oldList => {
+            return {
+                ...oldList,
+                [projectId]: [...(oldList[projectId]) || [], newTask]
+            }
+        })
+    }
+    const handleDeleteTask = (taskId, projectId) => {
+        setTaskList(oldList => {
+            return {
+                ...oldList,
+                [projectId]: oldList[projectId].filter(task => task.taskId !== taskId)
+            }
+        })
+    }
 
     const contextValue = {
         selectedProject: projectState.selectedProject,
         projectList: projectState.projects,
+        taskList,
         onAddNewProject: showNewProjectForm,
         onCancel: handleCancelProject,
         onSave: handleSaveProject,
         onProjectClick: handleSelectProject,
         onDeselectProject: handleDeselectProject,
-        onDelete: handleDeleteProject
+        onDelete: handleDeleteProject,
+        onAddTask: handleAddTask,
+        onDeleteTask: handleDeleteTask
     }
 
     return <>

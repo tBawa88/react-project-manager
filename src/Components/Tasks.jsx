@@ -1,14 +1,11 @@
 import { NewTask } from './'
 import { useContext } from 'react';
-import { TaskContext } from '../Context/TaskListStateProvider';
 import { ProjectContext } from '../Context/ProjectStateProvider';
 
 export const Tasks = () => {
 
-    const { onDeleteTask, taskList } = useContext(TaskContext);
-    const { selectedProject } = useContext(ProjectContext);
+    const { selectedProject, onDeleteTask, taskList } = useContext(ProjectContext);
     const tasks = taskList[selectedProject.id];
-    console.log('task array', tasks)
     let ulClasses = 'my-4 rounded-md bg-stone-100';
     if (tasks)
         ulClasses = 'p-2 my-4 rounded-md bg-stone-100'

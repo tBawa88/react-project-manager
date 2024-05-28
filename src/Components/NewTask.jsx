@@ -1,11 +1,9 @@
 import { useState, useContext } from "react";
-import { TaskContext } from "../Context/TaskListStateProvider";
 import { ProjectContext } from "../Context/ProjectStateProvider";
 
 export const NewTask = () => {
     const [task, setTask] = useState('');
-    const { onAddTask } = useContext(TaskContext);
-    const { selectedProject } = useContext(ProjectContext);
+    const { selectedProject, onAddTask } = useContext(ProjectContext);
     const handleChange = (event) => {
         setTask(event.target.value);
     }
