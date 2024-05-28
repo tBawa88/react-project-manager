@@ -6,3 +6,4 @@ export { Project } from './Project';
 export { Modal } from './Modal';
 export { Tasks } from './Tasks';
 export { NewTask } from './NewTask';
+export { ProjectDashboard } from './ProjectDashboard';

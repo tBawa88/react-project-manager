@@ -1,12 +1,11 @@
 import { Tasks } from './';
+import { useContext } from 'react';
+import { ProjectContext } from '../Context/ProjectStateProvider';
 
-export const Project = ({
-    project,
-    onDelete,
-    onAddTask,
-    onDeleteTask,
-    taskList
-}) => {
+export const Project = () => {
+
+
+    const { selectedProject: project, onDelete } = useContext(ProjectContext);
 
     const formattedDate = new Date(project.date).toLocaleDateString('en-UK', {
         year: 'numeric',
@@ -25,9 +24,9 @@ export const Project = ({
                 <p className="text-md text-stone-400 my-2">{formattedDate}</p>
                 <p className="my-4 text-stone-700">{project.description}</p>
             </header>
-            <Tasks taskList={taskList}
-                onAddTask={onAddTask}
-                onDeleteTask={onDeleteTask} />
+
+            <Tasks />
+
         </div>
     )
 }
