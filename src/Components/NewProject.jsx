@@ -1,20 +1,22 @@
 import { Input, Modal } from './';
-import { useRef } from 'react';
+import { useRef, useContext } from 'react';
 import { v4 as uuid } from 'uuid';
-export const NewProject = ({
-    onSave,
-    onCancel
-}) => {
+import { ProjectContext } from '../Context/ProjectStateProvider';
+
+export const NewProject = () => {
+    const { onSave, onCancel } = useContext(ProjectContext);
+
+    //list of refs
     const title = useRef();
     const description = useRef();
     const dueDate = useRef();
     const dialog = useRef();
+
     const handleSave = () => {
         const pTitle = title.current.value;
         const pDesc = description.current.value;
         const pDate = dueDate.current.value;
-        //validations here
-
+        //validating input values
         if (pTitle === '' ||
             pDesc === '' ||
             pDate === ''
@@ -22,7 +24,7 @@ export const NewProject = ({
             dialog.current.open();
             return;
         }
-        //then call the onSave() 
+        //if validations pass
         onSave({
             title: pTitle,
             description: pDesc,

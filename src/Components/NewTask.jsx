@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { ProjectContext } from "../Context/ProjectStateProvider";
 
-export const NewTask = ({
-    onAddTask
-}) => {
-    const [task, setTask] = useState('')
+export const NewTask = () => {
+    const [task, setTask] = useState('');
+    const { selectedProject, onAddTask } = useContext(ProjectContext);
     const handleChange = (event) => {
         setTask(event.target.value);
     }
@@ -11,7 +11,7 @@ export const NewTask = ({
         if (task.trim() === '')
             return;
         else {
-            onAddTask(task);
+            onAddTask(task, selectedProject.id);
             setTask('');
         }
     }
