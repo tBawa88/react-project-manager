@@ -1,9 +1,8 @@
-import { useContext } from 'react';
 import { SideBar, NoProject, NewProject, Project } from './'
-import { ProjectContext } from '../Context/ProjectStateProvider';
-export const ProjectDashboard = () => {
+import { useSelector } from 'react-redux';
 
-    const { selectedProject } = useContext(ProjectContext);
+export const ProjectDashboard = () => {
+    const selectedProject = useSelector(state => state.project.selectedProject);
 
     let projectContent;
     if (selectedProject === undefined)
@@ -16,7 +15,7 @@ export const ProjectDashboard = () => {
     return (
         <main className='h-screen my-8 flex gap-16'>
             <SideBar />
-            {projectContent}
+            { projectContent }
         </main>
     );
 }
